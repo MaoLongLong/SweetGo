@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SweetGo</title>
+    <link rel="icon" href="gopher-heart.png" type="image/png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="SweetGo" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      if (typeof navigator.serviceWorker !== "undefined") {
+        navigator.serviceWorker.register("sw.js");
+      }
+      window.$docsify = {
+        name: '<span style="color: #ff6b81">Sweet</span>Go',
+        repo: "MaoLongLong/SweetGo",
+        themeColor: "#007d9c",
+        auto2top: true,
+        loadSidebar: true,
+        subMaxLevel: 2,
+        alias: {
+          "/.*/_sidebar.md": "/_sidebar.md",
+        },
+        search: {
+          maxAge: 86400000,
+          paths: "auto",
+          placeholder: "搜索",
+          noData: "找不到结果",
+          depth: 2,
+        },
+        pagination: {
+          previousText: "上一章节",
+          nextText: "下一章节",
+          crossChapter: true,
+          crossChapterText: true,
+        },
+        plugins: [
+          function (hook, vm) {
+            hook.beforeEach(function (html) {
+              if (/githubusercontent\.com/.test(vm.route.file)) {
+                url = vm.route.file
+                  .replace("raw.githubusercontent.com", "github.com")
+                  .replace(/\/main/, "/blob/main");
+              } else if (/jsdelivr\.net/.test(vm.route.file)) {
+                url = vm.route.file
+                  .replace("cdn.jsdelivr.net/gh", "github.com")
+                  .replace("@main", "/blob/main");
+              } else {
+                url = "https://github.com/MaoLongLong/SweetGo/blob/main/" + vm.route.file;
+              }
+              var editHtml = "[:memo: 在 GitHub 上编辑](" + url + ")\n";
+              return (
+                editHtml +
+                html +
+                "\n\n----\n\n" +
+                '<a href="https://docsify.js.org" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Powered by docsify</a>'
+              );
+            });
+          },
+        ],
+      };
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/emoji.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@2.1.1/dist/docsify-copy-code.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-pagination@2.6.2/dist/docsify-pagination.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-go.min.js"></script>
+  </body>
+</html>
